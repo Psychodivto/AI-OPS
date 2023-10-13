@@ -1,0 +1,12 @@
+build:
+ psychodivto:  # cambiar por su namespace de okteto
+   image: okteto.dev/psychodivto:latest  # cambiar por su namespace de okteto
+
+deploy:
+ - okteto build # build the image with the latest code
+ - kubectl apply -f manifests # create all the resources in kubernetes
+dev:
+ psychodivto:
+   command: bash
+   sync:
+   - .:/autos  # cambiar por su proyecto
