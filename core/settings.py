@@ -81,7 +81,7 @@ WSGI_APPLICATION = 'core.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
-PROD_DATABASE = config("PROD_DATABASE", default='sistema_autos')
+PROD_DATABASE = config("PROD_DATABASE", default='postgres')
 PROD_USER = config("PROD_USER", default='postgres')
 PROD_PASSWORD = config("PROD_PASSWORD", default='postgres')
 PROD_HOST = config("PROD_HOST", default='localhost')

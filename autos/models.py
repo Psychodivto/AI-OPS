@@ -7,7 +7,7 @@ class Propietario(models.Model):
     nombre = models.CharField(max_length=100, verbose_name="Nombre")
     apellido = models.CharField(max_length=100, verbose_name="Apellido")
     fecha_nacimiento = models.DateField(verbose_name="Fecha de nacimiento")
-    telefono = models.CharField(max_length=100, verbose_name="Telefono")
+    telefono = models.CharField(max_length=10, verbose_name="Telefono")
     email = models.EmailField(max_length=100, verbose_name="Email")
     direccion = models.TextField(blank=True, verbose_name="Direccion")
 
@@ -20,17 +20,20 @@ class Propietario(models.Model):
 class Meta:
     ordering = ['nombre', 'apellido', 'fecha_nacimiento', 'telefono', 'email', 'direccion']
     Verbose_name = "Propietario"
-    Verbose_name_plural = "Propietarios"
-    db_table = "propietario"
+    db_table = "propietarios"
  
 class Auto(models.Model):
     marca = models.CharField(max_length=100)
     modelo = models.CharField(max_length=100)
     color = models.CharField(max_length=100)
-    matricula = models.IntegerField(max_length=100)
-    ano = models.IntegerField(max_length=5)
+    matricula = models.ImageField(upload_to='images/', null=True, blank=True)
+    ano = models.IntegerField(max_length=5, null=True, blank=True)
     imagen_url = models.TextField(blank=True) 
-    propietario = models.ForeignKey(Propietario, null=True, blank=True, on_delete=models.CASCADE, ) #related_name='autos'
+    propietario = models.ForeignKey(Propietario, on_delete=models.CASCADE, null=True ) #related_name='autos'
 
     def __str__(self):
         return self.marca
+        class Meta:
+            ordering = ['marca', 'modelo', 'color', 'matricula', 'ano', 'imagen_url']
+            Verbose_name = "Auto"
+            db_table = "autos"
