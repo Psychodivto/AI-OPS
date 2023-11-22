@@ -3,20 +3,37 @@ from graphene_django.types import DjangoObjectType
 from graphene import relay
 from .models import Auto, Propietario
 
+
 class AutoType(DjangoObjectType):
     class Meta:
         model = Auto
         fields = ("id", "marca", "modelo", "color", "matricula", "ano", "imagen_url")
+
+
 class PropietarioType(DjangoObjectType):
     class Meta:
         model = Propietario
-        fields = ("id", "nombre", "apellido", "fecha_nacimiento", "email", "telefono", "direccion")
+        fields = (
+            "id",
+            "nombre",
+            "apellido",
+            "fecha_nacimiento",
+            "email",
+            "telefono",
+            "direccion",
+        )
+
+
 class AutosConnection(relay.Connection):
     class Meta:
         node = AutoType
+
+
 class PropietariosConnection(relay.Connection):
     class Meta:
         node = PropietarioType
+
+
 class Query(graphene.ObjectType):
     all_autos = graphene.List(AutoType)
     all_propietarios = graphene.List(PropietarioType)
@@ -26,6 +43,7 @@ class Query(graphene.ObjectType):
 
     def resolve_all_propietarios(self, info, **kwargs):
         return Propietario.objects.all()
+
 
 class CreateAuto(graphene.Mutation):
     id = graphene.Int()
@@ -46,9 +64,19 @@ class CreateAuto(graphene.Mutation):
         imagen_url = graphene.String()
         propietario_id = graphene.Int()
 
-    def mutate(self, info, marca, modelo, color, matricula, ano, imagen_url, propietario_id):
+    def mutate(
+        self, info, marca, modelo, color, matricula, ano, imagen_url, propietario_id
+    ):
         propietario = Propietario.objects.get(pk=propietario_id)
-        auto = Auto(marca=marca, modelo=modelo, color=color, matricula=matricula, ano=ano, imagen_url=imagen_url, propietario=propietario)
+        auto = Auto(
+            marca=marca,
+            modelo=modelo,
+            color=color,
+            matricula=matricula,
+            ano=ano,
+            imagen_url=imagen_url,
+            propietario=propietario,
+        )
         auto.save()
         return CreateAuto(
             id=auto.id,
@@ -58,8 +86,9 @@ class CreateAuto(graphene.Mutation):
             matricula=auto.matricula,
             ano=auto.ano,
             imagen_url=auto.imagen_url,
-            propietario=auto.propietario
+            propietario=auto.propietario,
         )
+
 
 class CreatePropietario(graphene.Mutation):
     id = graphene.Int()
@@ -78,8 +107,17 @@ class CreatePropietario(graphene.Mutation):
         telefono = graphene.String()
         direccion = graphene.String()
 
-    def mutate(self, info, nombre, apellido, fecha_nacimiento, email, telefono, direccion):
-        propietario = Propietario(nombre=nombre, apellido=apellido, fecha_nacimiento=fecha_nacimiento, email=email, telefono=telefono, direccion=direccion)
+    def mutate(
+        self, info, nombre, apellido, fecha_nacimiento, email, telefono, direccion
+    ):
+        propietario = Propietario(
+            nombre=nombre,
+            apellido=apellido,
+            fecha_nacimiento=fecha_nacimiento,
+            email=email,
+            telefono=telefono,
+            direccion=direccion,
+        )
         propietario.save()
         return CreatePropietario(
             id=propietario.id,
@@ -88,11 +126,13 @@ class CreatePropietario(graphene.Mutation):
             fecha_nacimiento=propietario.fecha_nacimiento,
             email=propietario.email,
             telefono=propietario.telefono,
-            direccion=propietario.direccion
+            direccion=propietario.direccion,
         )
+
 
 class Mutation(graphene.ObjectType):
     create_auto = CreateAuto.Field()
     create_propietario = CreatePropietario.Field()
+
 
 schema = graphene.Schema(query=Query, mutation=Mutation)
