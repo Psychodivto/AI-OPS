@@ -9,3 +9,6 @@ coverage
 mixer
 python-decouple
 django-health-check
+Pillow
+flake8
+black
