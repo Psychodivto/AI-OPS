@@ -21,7 +21,7 @@ spec:
         livenessProbe:
           httpGet:
             path: /ht/
-            port: 5432
+            port: 8080
           initialDelaySeconds: 5
           periodSeconds: 5
 ---
@@ -36,6 +36,6 @@ spec:
   type: ClusterIP  
   ports:
   - name: "psychodivto"
-    port: 5432
+    port: 8080
   selector:
     app: psychodivto
