@@ -52,7 +52,7 @@ jobs:
     - uses: actions/checkout@v1
     - uses: okteto/context@2.7.0
       with:
-        token: ${{ secrets.OKTETO }}
+        token: ${{ secrets.OKTETO_TOKEN }}
 
     - name: Deploy
       uses: okteto/pipeline@2.7.0
