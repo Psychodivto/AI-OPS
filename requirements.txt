@@ -12,3 +12,4 @@ django-health-check
 Pillow
 flake8
 black
+confluent-kafka

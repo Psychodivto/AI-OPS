@@ -37,7 +37,7 @@ class Auto(models.Model):
     modelo = models.CharField(max_length=100)
     color = models.CharField(max_length=100)
     matricula = models.ImageField(upload_to="images/", null=True, blank=True)
-    ano = models.IntegerField(max_length=5, null=True, blank=True)
+    anio = models.IntegerField()
     imagen_url = models.TextField(blank=True)
     propietario = models.ForeignKey(
         Propietario, on_delete=models.CASCADE, null=True
@@ -47,6 +47,6 @@ class Auto(models.Model):
         return self.marca
 
         class Meta:
-            ordering = ["marca", "modelo", "color", "matricula", "ano", "imagen_url"]
+            ordering = ["marca", "modelo", "color", "matricula", "anio", "imagen_url"]
             Verbose_name = "Auto"
             db_table = "autos"

@@ -7,7 +7,7 @@ from .models import Auto, Propietario
 class AutoType(DjangoObjectType):
     class Meta:
         model = Auto
-        fields = ("id", "marca", "modelo", "color", "matricula", "ano", "imagen_url")
+        fields = ("id", "marca", "modelo", "color", "matricula", "anio", "imagen_url")
 
 
 class PropietarioType(DjangoObjectType):
@@ -51,7 +51,7 @@ class CreateAuto(graphene.Mutation):
     modelo = graphene.String()
     color = graphene.String()
     matricula = graphene.String()
-    ano = graphene.Int()
+    anio = graphene.Int()
     imagen_url = graphene.String()
     propietario = graphene.Field(PropietarioType)
 
@@ -60,12 +60,12 @@ class CreateAuto(graphene.Mutation):
         modelo = graphene.String()
         color = graphene.String()
         matricula = graphene.String()
-        ano = graphene.Int()
+        anio = graphene.Int()
         imagen_url = graphene.String()
         propietario_id = graphene.Int()
 
     def mutate(
-        self, info, marca, modelo, color, matricula, ano, imagen_url, propietario_id
+        self, info, marca, modelo, color, matricula, anio, imagen_url, propietario_id
     ):
         propietario = Propietario.objects.get(pk=propietario_id)
         auto = Auto(
@@ -73,7 +73,7 @@ class CreateAuto(graphene.Mutation):
             modelo=modelo,
             color=color,
             matricula=matricula,
-            ano=ano,
+            anio=anio,
             imagen_url=imagen_url,
             propietario=propietario,
         )
@@ -84,7 +84,7 @@ class CreateAuto(graphene.Mutation):
             modelo=auto.modelo,
             color=auto.color,
             matricula=auto.matricula,
-            ano=auto.ano,
+            anio=auto.anio,
             imagen_url=auto.imagen_url,
             propietario=auto.propietario,
         )
