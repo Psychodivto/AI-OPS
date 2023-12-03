@@ -1,15 +1,19 @@
 import graphene
-import autos.schema
+
+import autos.schemas.autos
+import autos.schemas.propietarios
 
 
-class Query(autos.schema.Query, graphene.ObjectType):
+class Query(autos.schemas.autos.Query,
+            graphene.ObjectType):
     pass
 
 
 schema = graphene.Schema(query=Query)
 
 
-class Mutation(autos.schema.Mutation, graphene.ObjectType):
+class Mutation(autos.schemas.autos.Mutation,
+               graphene.ObjectType):
     pass
 
 

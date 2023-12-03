@@ -1,10 +1,12 @@
 from django.db import models
 
+from django.contrib.auth.models import AbstractUser
 
 # Create your models here.
 
 
 class Propietario(models.Model):
+    id = models.AutoField(primary_key=True)
     nombre = models.CharField(max_length=100, verbose_name="Nombre")
     apellido = models.CharField(max_length=100, verbose_name="Apellido")
     fecha_nacimiento = models.DateField(verbose_name="Fecha de nacimiento")
@@ -28,11 +30,12 @@ class Meta:
         "email",
         "direccion",
     ]
-    Verbose_name = "Propietario"
+    verbose_name = "Propietario"
     db_table = "propietarios"
 
 
 class Auto(models.Model):
+    id = models.AutoField(primary_key=True)
     marca = models.CharField(max_length=100)
     modelo = models.CharField(max_length=100)
     color = models.CharField(max_length=100)
@@ -46,7 +49,25 @@ class Auto(models.Model):
     def __str__(self):
         return self.marca
 
-        class Meta:
-            ordering = ["marca", "modelo", "color", "matricula", "anio", "imagen_url"]
-            Verbose_name = "Auto"
-            db_table = "autos"
+class Meta:
+    ordering = ["marca", "modelo", "color", "matricula", "anio", "imagen_url"]
+    verbose_name = "Auto"
+    db_table = "autos"
+
+
+class CustomUser(AbstractUser):
+    fecha_nacimiento = models.DateField(verbose_name="Fecha de nacimiento")
+    telefono = models.CharField(max_length=10, verbose_name="Telefono")
+    direccion = models.TextField(blank=True, verbose_name="Direccion")
+
+    def nombre_completo(self):
+        return self.first_name + " " + self.last_name
+
+    def __str__(self):
+        return self.username
+
+class Meta:
+    ordering = ["first_name", "last_name", "fecha_nacimiento", "telefono", "direccion"]
+    verbose_name = "Usuario"
+    verbose_name_plural = "Usuarios"
+    db_table = "usuarios"
