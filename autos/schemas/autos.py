@@ -7,22 +7,7 @@ from graphene import relay
 from autos.models import Auto, Propietario
 
 
-class PropietarioType(DjangoObjectType):
-    class Meta:
-        model = Propietario
-        fields = (
-            "id",
-            "nombre",
-            "apellido",
-            "fecha_nacimiento",
-            "email",
-            "telefono",
-            "direccion",
-        )
-
 class AutoType(DjangoObjectType):
-
-    propietario= graphene.Field(PropietarioType)
 
     class Meta:
         model = Auto
@@ -73,11 +58,14 @@ class CreateAuto(graphene.Mutation):
         anio = graphene.Int()
         imagen_url = graphene.String()
 
+    sucess = graphene.Boolean()
+
     def mutate(self, info, marca, modelo, color, matricula, anio, imagen_url):
         auto = Auto(marca=marca, modelo=modelo, color=color, matricula=matricula, anio=anio, imagen_url=imagen_url)
         auto.save()
 
-        
+        producer = KafkaProducer(bootstrap_servers=['localhost:9092', 'mi_topic'])
+        producer.produce_message('Se registro un nuevo auto')
 
         return CreateAuto(
             id=auto.id,

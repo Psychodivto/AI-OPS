@@ -56,18 +56,7 @@ class Meta:
 
 
 class CustomUser(AbstractUser):
+    id = models.AutoField(primary_key=True)
     fecha_nacimiento = models.DateField(verbose_name="Fecha de nacimiento")
-    telefono = models.CharField(max_length=10, verbose_name="Telefono")
-    direccion = models.TextField(blank=True, verbose_name="Direccion")
-
-    def nombre_completo(self):
-        return self.first_name + " " + self.last_name
-
-    def __str__(self):
-        return self.username
-
-class Meta:
-    ordering = ["first_name", "last_name", "fecha_nacimiento", "telefono", "direccion"]
-    verbose_name = "Usuario"
-    verbose_name_plural = "Usuarios"
-    db_table = "usuarios"
+    direccion = models.CharField(blank=True, max_length=255, null=True, verbose_name="Direccion")
+    

@@ -2,16 +2,10 @@ import graphene
 
 from graphene_django.types import DjangoObjectType
 from graphene import relay
-from autos.models import Propietario, Auto
+from autos.models import Propietario
 
-class AutoType(DjangoObjectType):
-    class Meta:
-        model = Auto
-        fields = ("id", "marca", "modelo", "color", "matricula", "anio", "imagen_url")
 
 class PropietarioType(DjangoObjectType):
-    auto =  graphene.Field(AutoType)
-
     class Meta:
         model = Propietario
         fields = (
@@ -32,6 +26,7 @@ class Query(graphene.ObjectType):
     all_propietarios = graphene.List(PropietarioType)
     nombre_propietario = graphene.Field(PropietarioType, nombre=graphene.String())
     telefono_propietario = graphene.Field(PropietarioType, telefono=graphene.String())
+    auto_propietario = graphene.Field(PropietarioType, auto=graphene.String())
 
     def resolve_all_propietarios(self, info, **kwargs):
         return Propietario.objects.all()

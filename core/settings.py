@@ -42,7 +42,7 @@ INSTALLED_APPS = [
     #add for me
     'graphene_django',
     'autos',
-    'corsheaders'
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
@@ -156,3 +156,8 @@ CORS_ALLOWED_ORIGINS = [
 ]
 
 AUTH_USER_MODEL = 'autos.CustomUser'
+
+JWT_AUTH = {
+    'JWT_VERIFY_EXPIRATION': False,
+    
+}
