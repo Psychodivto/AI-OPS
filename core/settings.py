@@ -155,7 +155,6 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
 ]
 
-AUTH_USER_MODEL = 'autos.CustomUser'
 
 JWT_AUTH = {
     'JWT_VERIFY_EXPIRATION': False,
