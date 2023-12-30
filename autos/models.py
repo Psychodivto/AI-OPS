@@ -32,6 +32,7 @@ class Meta:
     db_table = "propietarios"
 
 
+
 class Auto(models.Model):
     id = models.AutoField(primary_key=True)
     marca = models.CharField(max_length=100)
