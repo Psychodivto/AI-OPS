@@ -81,9 +81,9 @@ WSGI_APPLICATION = 'core.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
-PROD_DATABASE = config("PROD_DATABASE", default='postgres')
-PROD_USER = config("PROD_USER", default='postgres')
-PROD_PASSWORD = config("PROD_PASSWORD", default='postgres')
+PROD_DATABASE = config("PROD_DATABASE", default='sistema_autos')
+PROD_USER = config("PROD_USER", default='divto')
+PROD_PASSWORD = config("PROD_PASSWORD", default='divtopc27')
 PROD_HOST = config("PROD_HOST", default='localhost')
 PROD_PORT = config("PROD_PORT", default='5432')
 
@@ -154,8 +154,6 @@ CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
 ]
-
-AUTH_USER_MODEL = 'autos.CustomUser'
 
 JWT_AUTH = {
     'JWT_VERIFY_EXPIRATION': False,

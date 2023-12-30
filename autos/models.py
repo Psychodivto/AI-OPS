@@ -1,7 +1,5 @@
 from django.db import models
 
-from django.contrib.auth.models import AbstractUser
-
 # Create your models here.
 
 
@@ -9,7 +7,7 @@ class Propietario(models.Model):
     id = models.AutoField(primary_key=True)
     nombre = models.CharField(max_length=100, verbose_name="Nombre")
     apellido = models.CharField(max_length=100, verbose_name="Apellido")
-    fecha_nacimiento = models.DateField(verbose_name="Fecha de nacimiento")
+    fecha_nacimiento = models.DateField(verbose_name="Fecha de nacimiento", null=True)
     telefono = models.CharField(max_length=10, verbose_name="Telefono")
     email = models.EmailField(max_length=100, verbose_name="Email")
     direccion = models.TextField(blank=True, verbose_name="Direccion")
@@ -39,8 +37,8 @@ class Auto(models.Model):
     marca = models.CharField(max_length=100)
     modelo = models.CharField(max_length=100)
     color = models.CharField(max_length=100)
-    matricula = models.ImageField(upload_to="images/", null=True, blank=True)
-    anio = models.IntegerField()
+    matricula = models.ImageField(upload_to="images/", null=True)
+    anio = models.IntegerField(null=True)
     imagen_url = models.TextField(blank=True)
     propietario = models.ForeignKey(
         Propietario, on_delete=models.CASCADE, null=True
@@ -55,8 +53,4 @@ class Meta:
     db_table = "autos"
 
 
-class CustomUser(AbstractUser):
-    id = models.AutoField(primary_key=True)
-    fecha_nacimiento = models.DateField(verbose_name="Fecha de nacimiento")
-    direccion = models.CharField(blank=True, max_length=255, null=True, verbose_name="Direccion")
-    
+
