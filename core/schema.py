@@ -2,10 +2,11 @@ import graphene
 
 import autos.schemas.autos
 import autos.schemas.propietarios
-
+import autos.schemas.marca
 
 class Query(autos.schemas.autos.Query,
             autos.schemas.propietarios.Query,
+            autos.schemas.marca.Query,
             graphene.ObjectType):
     pass
 

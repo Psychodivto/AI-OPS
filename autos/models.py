@@ -1,7 +1,7 @@
 from django.db import models
 
 # Create your models here.
-
+    
 
 class Propietario(models.Model):
     id = models.AutoField(primary_key=True)
@@ -16,7 +16,7 @@ class Propietario(models.Model):
         return self.nombre + " " + self.apellido
 
     def __str__(self):
-        return self.nombre
+        return self.nombre_completo()
 
 
 class Meta:
@@ -31,27 +31,34 @@ class Meta:
     verbose_name = "Propietario"
     db_table = "propietarios"
 
+class Marca(models.Model):
+    id = models.AutoField(primary_key=True)
+    nombre = models.CharField(max_length=100, verbose_name="Nombre", unique=True)
 
+    def __str__(self):
+        return self.nombre
+    
+    class Meta:
+        ordering = ["nombre"]
+        verbose_name = "Marca"
+        db_table = "marcas"
 
 class Auto(models.Model):
     id = models.AutoField(primary_key=True)
-    marca = models.CharField(max_length=100)
-    modelo = models.CharField(max_length=100)
-    color = models.CharField(max_length=100)
+    marca = models.ForeignKey(Marca, on_delete=models.CASCADE, null=True, verbose_name="Marca")
+    propietario = models.ForeignKey(Propietario, on_delete=models.CASCADE, null=True, verbose_name="Propietario")
+    modelo = models.CharField(max_length=100, verbose_name="Modelo")
+    color = models.CharField(max_length=100, verbose_name="Color")
     matricula = models.ImageField(upload_to="images/", null=True)
-    anio = models.IntegerField(null=True)
-    imagen_url = models.TextField(blank=True)
-    propietario = models.ForeignKey(
-        Propietario, on_delete=models.CASCADE, null=True
-    )  # related_name='autos'
-
+    anio = models.PositiveIntegerField(verbose_name="Año de fabricacion", null=True)
+    adquisicion = models.DateField(verbose_name="Fecha de adquisicion", null=True)
+    imagen_url = models.TextField(blank=True, verbose_name="Url de la imagen")
+    # related_name='autos'
+    
     def __str__(self):
-        return self.marca
-
-class Meta:
-    ordering = ["marca", "modelo", "color", "matricula", "anio", "imagen_url"]
-    verbose_name = "Auto"
-    db_table = "autos"
-
-
-
+        return self.modelo
+    
+    class Meta:
+        ordering = ["modelo"]
+        verbose_name = "Auto"
+        db_table = "autos"
