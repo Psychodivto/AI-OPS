@@ -3,11 +3,20 @@ kind: ConfigMap
 metadata:
  name: psychodivto-config
  labels:
+<<<<<<< HEAD
    app: postgres
 data:
  PROD_SECRET_KEY: django_sistem_autos
  PROD_DATABASE: postgres
  PROD_USER: postgres
  PROD_PASSWORD: postgres
+=======
+   app: sistema_autos
+data:
+ PROD_SECRET_KEY: django_sistem_autos
+ PROD_DATABASE: sistema_autos
+ PROD_USER: divto
+ PROD_PASSWORD: divtopc27
+>>>>>>> master
  PROD_HOST: localhost
  PROD_PORT: "5432"
