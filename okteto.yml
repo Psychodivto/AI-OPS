@@ -9,4 +9,4 @@ dev:
  psychodivto:
    command: bash
    sync:
-   - .:/autos  # cambiar por su proyecto
+   - .:/vehiculares  # cambiar por su proyecto
