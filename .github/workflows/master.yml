@@ -3,7 +3,7 @@ name: Despliegue en Railway
 on:
   push:
     branches:
-      - main
+      - master
 
 jobs:
   deploy:
@@ -28,3 +28,4 @@ jobs:
           curl -fsSL https://get.railway.app | bash
           railway run "python manage.py migrate"
           railway up
+
