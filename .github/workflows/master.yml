@@ -1,11 +1,12 @@
-- name: Instalar Railway
-  run: curl -fsSL https://get.railway.app | bash
-
-  - name: Añadir Railway al PATH
-  run: echo 'export PATH=$HOME/.railway/bin:$PATH' >> $HOME/.bashrc
-
 
 name: Despliegue en Railway
+
+- name: Instalar Railway
+  run: curl -fsSL https://get.railway.app | bash
+  
+  - name: Añadir Railway al PATH
+    run: echo 'export PATH=$HOME/.railway/bin:$PATH' >> $HOME/.bashrc
+
 
 on:
   push:
