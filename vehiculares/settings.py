@@ -81,20 +81,15 @@ WSGI_APPLICATION = 'vehiculares.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
-PROD_DATABASE = config("PROD_DATABASE", default='sistema_autos')
-PROD_USER = config("PROD_USER", default='divto')
-PROD_PASSWORD = config("PROD_PASSWORD", default='divtopc27')
-PROD_HOST = config("PROD_HOST", default='localhost')
-PROD_PORT = config("PROD_PORT", default='5432')
-
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': PROD_DATABASE,
-        'USER': PROD_USER,
-        'PASSWORD': PROD_PASSWORD,
-        'HOST': PROD_HOST,
-        'PORT': PROD_PORT,
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'sistema_autos',
+        'USER': 'divto',
+        'PASSWORD': 'divtopc27',
+        'HOST': 'localhost',
+        'PORT': '5432',
+        
     }
 }
 
@@ -136,6 +131,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
 
 GRAPHENE = {
     'SCHEMA': 'vehiculares.schema.schema',

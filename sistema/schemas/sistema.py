@@ -1,18 +1,21 @@
 import graphene
-from graphene_django import DjangoObjectType
-from graphene_django.filter import DjangoFilterConnectionField
-from sistema.models import Auto, Propietario
 
+from graphene_file_upload.scalars import Upload
+from graphql import GraphQLError
+from graphene_django import DjangoObjectType
+from sistema.models import Auto, Propietario
 
 class AutoType(DjangoObjectType):
     class Meta:
         model = Auto
-        fields = ("id", "marca", "modelo", "anio", "matricula", "color", "adquisicion", "imagen_matricula")
+        fields = ("id", "marca", "modelo", "anio", "matricula", "color", "adquisicion", "imagen")
         
 class PropietarioType(DjangoObjectType):
     class Meta:
         model = Propietario
         fields = ("id", "nombre", "apellido", "dni", "direccion", "telefono", "email", "auto")
+        
+## Query for get all autos and propietarios, and get autos and propietarios by marca and dni
         
 class Query(graphene.ObjectType):
     all_autos = graphene.List(AutoType)
@@ -32,7 +35,7 @@ class Query(graphene.ObjectType):
     def resolve_marca_auto(root, info, marca):
         return Auto.objects.filter(marca=marca)
     
-    def resolver_dni_propietario(root, info, dni):
+    def resolve_dni_propietario(root, info, dni):
         return Propietario.objects.filter(dni=dni)
     
     def resolve_auto(root, info, id):
@@ -47,50 +50,31 @@ class Query(graphene.ObjectType):
         except Propietario.DoesNotExist:
             return None
         
+## Mutation for create a new Auto and Propietario
     
 class CreateAuto(graphene.Mutation):
     id = graphene.Int()
-    marca = graphene.String()
-    modelo = graphene.String()
-    anio = graphene.Int()
-    matricula = graphene.String()
-    color = graphene.String()
-    adquisicion = graphene.Date()
-    imagen_matricula = graphene.String()
+    auto = graphene.Field(AutoType)
     
-    class Arguments:
+    class Arguments:    
         marca = graphene.String()
         modelo = graphene.String()
         anio = graphene.Int()
         matricula = graphene.String()
         color = graphene.String()
         adquisicion = graphene.Date()
-        imagen_matricula = graphene.String()
+        imagen = Upload(required=True)
         
-    def mutate(self, info, marca, modelo, anio, matricula, color, adquisicion, imagen_matricula):
-        auto = Auto(marca=marca, modelo=modelo, anio=anio, matricula=matricula, color=color, adquisicion=adquisicion, imagen_matricula=imagen_matricula)
+        
+    def mutate(self, info, marca, modelo, anio, matricula, color, adquisicion, imagen, **kwargs):
+        auto = Auto(marca=marca, modelo=modelo, anio=anio, matricula=matricula, color=color, adquisicion=adquisicion, imagen=imagen)
         auto.save()
         
-        return CreateAuto(
-            id=auto.id,
-            marca=auto.marca,
-            modelo=auto.modelo,
-            anio=auto.anio,
-            matricula=auto.matricula,
-            color=auto.color,
-            adquisicion=auto.adquisicion,
-            imagen_matricula=auto.imagen_matricula
-        )
-        
+        return CreateAuto(auto=auto)
+                
 class CreatePropietario(graphene.Mutation):
     id = graphene.Int()
-    nombre = graphene.String()
-    apellido = graphene.String()
-    dni = graphene.Int()
-    direccion = graphene.String()
-    telefono = graphene.String()
-    email = graphene.String()
-    auto = graphene.Field(AutoType)
+    propietario = graphene.Field(PropietarioType)
     
     class Arguments:
         nombre = graphene.String()
@@ -106,16 +90,7 @@ class CreatePropietario(graphene.Mutation):
         propietario = Propietario(nombre=nombre, apellido=apellido, dni=dni, direccion=direccion, telefono=telefono, email=email, auto=auto)
         propietario.save()
         
-        return CreatePropietario(
-            id=propietario.id,
-            nombre=propietario.nombre,
-            apellido=propietario.apellido,
-            dni=propietario.dni,
-            direccion=propietario.direccion,
-            telefono=propietario.telefono,
-            email=propietario.email,
-            auto=propietario.auto
-        )
+        return CreatePropietario(id=propietario.id)
         
 class Mutation(graphene.ObjectType):
     create_auto = CreateAuto.Field()
