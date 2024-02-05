@@ -1,15 +1,19 @@
+# Add for me
+
+# Default imports
 from django.db import models
 from django.contrib.auth.models import AbstractUser
-
 
 # Create your models here.
 
 class CustomUser(AbstractUser):
     email = models.EmailField(max_length=100, unique=True)
     
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = ['username']
+    
     def __str__(self):
         return self.username
-    
     
 class Auto(models.Model):
     marca = models.CharField(max_length=100)
@@ -18,8 +22,8 @@ class Auto(models.Model):
     matricula = models.CharField(max_length=100)
     color = models.CharField(max_length=100)
     adquisicion = models.DateField()
-    imagen_matricula = models.CharField(max_length=100)
-        
+    imagen = models.ImageField(upload_to='media', null=True, blank=True)
+                    
     def __str__(self):
         return self.marca
     
