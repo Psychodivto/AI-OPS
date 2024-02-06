@@ -1,11 +1,19 @@
-FROM python:3.10.0a6-slim-buster
+FROM python:3.13.0a3-alpine3.19
+
+ENV PYTHONDONTWRITEBYTECODE 1
 
 ENV PYTHONUNBUFFERED 1
-RUN mkdir /sistema
-WORKDIR /sistema
-COPY requirements.txt /sistema/
+
+RUN mkdir /vehiculares
+WORKDIR /vehiculares
+COPY requirements.txt /vehiculares/
+
 RUN pip install -r requirements.txt
-COPY . /sistema/
-#RUN python manage.py makemigrations --setting=settings.develop 
-#RUN python manage.py migrate --setting=settings.develop 
+
+COPY . /vehiculares/
+
+#RUN python manage.py makemigrations --setting=vehiculares.settings.production
+
+#RUN python manage.py migrate --setting=vehiculares.settings.production
+
 CMD python manage.py runserver 0.0.0.0:8080
