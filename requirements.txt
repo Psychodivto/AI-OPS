@@ -1,28 +1,42 @@
-Django==3.2.10
-graphene-django==3.0.0
-djangorestframework==3.12.4
-django-cors-headers==3.8.0
-django-rest-framework-social-oauth2
+# ==========================================
+# 1. NÚCLEO DE DJANGO Y SEGURIDAD
+# ==========================================
+Django>=4.2,<5.0                 # Actualizado a la versión LTS más estable
+django-cors-headers>=4.0.0       # Para permitir peticiones desde tu app móvil
+python-dotenv==1.0.0             # Mantenemos esto en lugar de decouple (es más estándar hoy)
+django-health-check              # Excelente para monitorear el servidor
+
+# ==========================================
+# 2. GRAPHQL (Reemplaza a Django REST Framework)
+# ==========================================
+graphene-django>=3.0.0
+graphene-file-upload>=1.3.0      # Vital para recibir la imagen de la placa
+django-filter>=23.2              # Para hacer búsquedas avanzadas en GraphQL
+django-graphql-jwt               # Mantenemos JWT para la autenticación de usuarios
+
+# ==========================================
+# 3. BASE DE DATOS Y PRODUCCIÓN
+# ==========================================
+psycopg2-binary>=2.9.8           # Mantenemos Postgres (¡Excelente elección sobre SQLite!)
+whitenoise>=6.6.0                # Para servir archivos estáticos en producción
+gunicorn>=21.2.0                 # Servidor WSGI para producción
+
+# ==========================================
+# 4. MOTOR ANPR (INTELIGENCIA ARTIFICIAL) --- ¡LO NUEVO!
+# ==========================================
+Pillow>=10.1.0                   # Para el manejo de ImageField
+opencv-python-headless           # Procesamiento de imágenes (versión servidor)
+ultralytics                      # Para correr el modelo YOLO (detección de placas)
+easyocr                          # Para extraer el texto (OCR)
+numpy
+
+# ==========================================
+# 5. HERRAMIENTAS DE DESARROLLO Y TESTING (Opcional en Prod)
+# ==========================================
+django-extensions>=3.2.0         # Mantenemos esto, shell_plus es muy útil
 pytest
 pytest-django
-graphene-django-extras==0.5.2
-drf-yasg==1.20.0
-django-filter==2.4.0
-graphene-file-upload
-django-graphql-auth==0.3.0
-python-decouple==3.5
-django-extensions==3.1.3
-django-graphql-jwt
-psycopg2-binary==2.9.8
-pillow==10.1.0
-django-filter
-PyJWT
-django-health-check
-mixer
 coverage
-python-dotenv==0.21.1
-whitenoise==6.6.0
-gunicorn==21.2.0
 
 
 

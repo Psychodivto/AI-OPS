@@ -38,3 +38,13 @@ class Propietario(models.Model):
     
     def __str__(self):
         return self.nombre
+    
+class DeteccionPlaca(models.Model):
+    imagen_captura = models.ImageField(upload_to='capturas_anpr/')
+    matricula_leida = models.CharField(max_length=100, blank=True, null=True)
+    confianza = models.FloatField(null=True, blank=True)    # Fecha y hora exacta en la que pasó el vehículo
+    fecha_hora = models.DateTimeField(auto_now_add=True)
+    auto_registrado = models.ForeignKey(Auto, on_delete=models.SET_NULL, null=True, blank=True)
+
+    def __str__(self):
+        return f"Detección: {self.matricula_leida} - {self.fecha_hora}"

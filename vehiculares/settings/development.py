@@ -13,7 +13,7 @@ ALLOWED_HOSTS = []
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
+        'ENGINE': 'django.db.backends.postgresql    ',
         'NAME': 'sistema_autos',
         'USER': 'divto',
         'PASSWORD': 'divtopc27',
